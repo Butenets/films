@@ -1,0 +1,91 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=600, user-scalable=yes">
+        <title>Выбор фильма</title>
+        <link rel="stylesheet" href="bootstrap.min.css"/>
+        <script src="jquery.js"></script>
+        <link rel="stylesheet" href="style.css"/>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+               <div class="col">
+                <div class="card">
+                    <div class="card-body text-center" id="1"></div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                 <div class="card">
+                     <div class="card-body text-center" id="2"></div>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col">
+                 <div class="card">
+                     <div class="card-body text-center" id="3"></div>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col">
+                 <div class="card">
+                     <div class="card-body text-center" id="4"></div>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <form class="new_form" action="#" onsubmit="funs();">
+                    <div class="form-group">
+                      <label class="text-center" for="text">Введите фильм</label><br>
+                      <input type="text" id="text">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="sub">Добавить фильм</button>
+                  </form>
+             </div>
+        </div>
+
+
+        <script>
+         
+        var funs = function(){
+            var text = $("#text").val();
+           for(i=1; i<=4; ++i){
+            var numer = $("#"+i+"").text().length;
+            if(numer == 0){
+               $("#"+i+"").append(text);
+               $("#text").val('');
+               break;
+            }
+           if(i==4){
+              alert("Фильмы выбраны");
+              $("#text").val('');
+              $.ajax({
+                  type: "POST",
+             url: 'rand.php',
+             data: 'text',
+            success: function(data) {
+            var film = $("#"+data+"").text();  
+            $.ajax({
+            type: "POST",
+             url: 'db.php',
+             data: {film:film},
+
+});
+            alert("Мы будем смотреть фильм - "+film+"");
+            $("#"+data+"").css( "background-color", "green" );
+  }
+
+});
+
+
+
+
+           }
+        }
+        }
+        </script>
+    </body>
+</html>
